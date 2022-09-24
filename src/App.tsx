@@ -138,7 +138,7 @@ function App() {
           </>
         )}
         {screen === "search-location" && <h1>Search</h1>}
-        {screen === "done" && <h1>Delivered!!!</h1>}
+        {screen === "done" && <DonePage />}
       </div>
     </ScreenContext.Provider>
   );
