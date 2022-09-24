@@ -95,15 +95,6 @@ const Map: React.FC<MapProps> = ({
                     return React.cloneElement(child, { map } as any);
                 }
             })}
-            <Marker
-                map={map}
-                icon={{
-                    url: "bike.png",
-                    scaledSize: new google.maps.Size(80, 80),
-                }}
-                animation={google.maps.Animation.DROP}
-                position={{ lat: 52.5, lng: 13.4 }}
-            />
         </div>
     );
 };

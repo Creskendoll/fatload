@@ -1,0 +1,19 @@
+.drawer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 30vh;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+    background-color: white;
+}
+
+.divider {
+    width: 30%;
+    background-color: lightgray;
+    height: 4px;
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right:auto;
+}
