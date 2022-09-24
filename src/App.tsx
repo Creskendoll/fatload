@@ -30,13 +30,14 @@ function App() {
   const [screen, setScreen] = React.useState<ScreenState>("landing");
   const screenValue = React.useMemo(() => [screen, setScreen], [screen]);
 
-  const dirService = React.useRef(new google.maps.DirectionsService());
-  const dirRenderer = React.useRef(
-    new google.maps.DirectionsRenderer({
-      suppressMarkers: true,
-      suppressBicyclingLayer: true,
-    })
-  );
+    const placesService = React.useRef<google.maps.places.PlacesService | null>(null);
+    const dirService = React.useRef(new google.maps.DirectionsService());
+    const dirRenderer = React.useRef(
+        new google.maps.DirectionsRenderer({
+            suppressMarkers: true,
+            suppressBicyclingLayer: true,
+        })
+    );
 
   function animateBike(
     route: google.maps.LatLng[],
@@ -95,6 +96,7 @@ function App() {
     setCenter(m.getCenter().toJSON());
 
     if (!dirRenderer.current.getMap()) dirRenderer.current.setMap(m);
+    if (!placesService.current) placesService.current = new google.maps.places.PlacesService(m);
   };
 
   return (
@@ -134,7 +136,7 @@ function App() {
               )}
             </Map>
 
-            <MapDrawer screen={screen} />
+            <MapDrawer screen={screen} placesService={placesService} />
           </>
         )}
         {screen === "search-location" && <h1>Search</h1>}
