@@ -1,9 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import "./styles/App.css";
 import Map from "./Map";
 import Marker from "./Marker";
 import { mockPath } from "./constants";
 import MapDrawer from "./components/MapDrawer";
+import DonePage from './components/DonePage'
 
 type ScreenState =
     | "landing"
@@ -14,7 +15,7 @@ type ScreenState =
 
 export const ScreenContext = React.createContext<
     [ScreenState, (state: ScreenState) => void]
->(["landing", () => {}]);
+>(["landing", () => { }]);
 
 function App() {
     const [clicks, setClicks] = useState<google.maps.LatLng[]>([]);
@@ -141,7 +142,7 @@ function App() {
                     </>
                 )}
                 {screen === "search-location" && <h1>Search</h1>}
-                {screen === "done" && <h1>Delivered!!!</h1>}
+                {screen === "done" && <DonePage />}
             </div>
         </ScreenContext.Provider>
     );
