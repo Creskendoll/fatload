@@ -11,7 +11,12 @@ function App() {
         lng: 13.4,
     });
     const dirService = React.useRef(new google.maps.DirectionsService());
-    const dirRenderer = React.useRef(new google.maps.DirectionsRenderer());
+    const dirRenderer = React.useRef(
+        new google.maps.DirectionsRenderer({
+            suppressMarkers: true,
+            suppressBicyclingLayer: true,
+        })
+    );
 
     function fetchDestination(
         origin: google.maps.LatLng,
@@ -25,6 +30,7 @@ function App() {
             },
             (result, status) => {
                 if (status === "OK") dirRenderer.current.setDirections(result);
+                // const [route] = result.routes
 
                 console.log(result);
             }
