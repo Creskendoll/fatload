@@ -42,23 +42,29 @@ export default function SearchDrawer({ placesService }: Props) {
                     }}
                     type="text"
                     className="form-control"
-                    list="locations"
                     placeholder="Delivery start location"
                     value={startLocationValue}
-                    onChange={(e) => setStartLocationValue(e.target.value)}
+                    onChange={(e) => {
+                        
+                        setStartLocationValue(e.target.value)
+                    }}
                 ></input>
-                <datalist id="locations">
-                    {startLocationSuggestions?.map((location, i) => {
+                <div>
+                {startLocationSuggestions?.map((location, i) => {
                         return (
                             i < 5 && (
-                                <option
+                                <span
+                                    onClick={(e) => {
+                                        setStartLocationValue(location?.formatted_address || "")
+                                    }}
                                     key={i}
-                                    value={location?.formatted_address}
-                                ></option>
+                                >
+                                    {location?.formatted_address}
+                                </span>
                             )
                         );
                     })}
-                </datalist>
+                </div>
             </div>
             <button onClick={() => setScreen("in-progress")}>Order</button>
         </>
