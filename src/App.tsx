@@ -4,10 +4,7 @@ import Map from "./Map";
 import Marker from "./Marker";
 import { mockPath } from "./constants";
 import MapDrawer from "./components/MapDrawer";
-<<<<<<< HEAD
-=======
 import DonePage from './components/DonePage'
->>>>>>> bryan_version
 
 type ScreenState =
     | "landing"
@@ -18,11 +15,7 @@ type ScreenState =
 
 export const ScreenContext = React.createContext<
     [ScreenState, (state: ScreenState) => void]
-<<<<<<< HEAD
->(["landing", () => {}]);
-=======
 >(["landing", () => { }]);
->>>>>>> bryan_version
 
 function App() {
     const [clicks, setClicks] = useState<google.maps.LatLng[]>([]);
@@ -149,11 +142,7 @@ function App() {
                     </>
                 )}
                 {screen === "search-location" && <h1>Search</h1>}
-<<<<<<< HEAD
-                {screen === "done" && <h1>Delivered!!!</h1>}
-=======
                 {screen === "done" && <DonePage />}
->>>>>>> bryan_version
             </div>
         </ScreenContext.Provider>
     );
