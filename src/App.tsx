@@ -7,6 +7,7 @@ import { mockPath } from "./constants";
 function App() {
     const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
     const [zoom, setZoom] = React.useState(12);
+<<<<<<< Updated upstream
     const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
         lat: 52.5,
         lng: 13.4,
@@ -14,6 +15,9 @@ function App() {
     const [bikeLocation, setBikeLocation] =
         React.useState<google.maps.LatLng | null>(null);
 
+=======
+    const [center, setCenter] = React.useState<google.maps.LatLngLiteral | null>(null);
+>>>>>>> Stashed changes
     const dirService = React.useRef(new google.maps.DirectionsService());
     const dirRenderer = React.useRef(
         new google.maps.DirectionsRenderer({
@@ -22,6 +26,7 @@ function App() {
         })
     );
 
+<<<<<<< Updated upstream
     function animateBike(
         route: google.maps.LatLng[],
         index: number,
@@ -35,6 +40,21 @@ function App() {
             }, wait);
         }
     }
+=======
+    useEffect(() => {
+        const USER_POSITION: google.maps.LatLngLiteral = { lat: null, lng: null }
+        const DEFAULT_POSITION: google.maps.LatLngLiteral = { lat: 52.5, lng: 13.4 }
+        if (window.navigator.geolocation) {
+            window.navigator.geolocation.getCurrentPosition(position => {
+                CURRENT_POSITION.lat = position.coords.latitude;
+                CURRENT_POSITION.lng = position.coords.longitude;
+            })
+        } else {
+            setCenter(DEFAULT_POSITION)
+        }
+        setCenter(USER_POSITION)
+    }, [])
+>>>>>>> Stashed changes
 
     function fetchDestination(
         origin: google.maps.LatLng,
@@ -84,6 +104,7 @@ function App() {
 
     return (
         <div>
+<<<<<<< Updated upstream
             <Map
                 style={{}}
                 center={center}
@@ -110,6 +131,27 @@ function App() {
                     />
                 )}
             </Map>
+=======
+            {(center ?
+                <Map
+                    style={{}}
+                    center={center}
+                    zoom={zoom}
+                    onClick={onClick}
+                    onIdle={onIdle}
+                    clickableIcons={false}
+                >
+                    {clicks.map((latLng, i) => (
+                        <Marker
+                            key={i}
+                            position={latLng}
+                            animation={google.maps.Animation.DROP}
+                        />
+                    ))}
+                </Map>
+                : <p>hi</p>
+            )}
+>>>>>>> Stashed changes
         </div>
     );
 }
