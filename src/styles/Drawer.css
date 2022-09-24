@@ -1,5 +1,6 @@
 .drawer {
     position: absolute;
+    padding: 1rem;
     bottom: 0px;
     left: 0px;
     right: 0px;
@@ -7,13 +8,13 @@
     border-top-left-radius: 2rem;
     border-top-right-radius: 2rem;
     background-color: white;
+    transition: height 0.15s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .divider {
     width: 30%;
     background-color: lightgray;
     height: 4px;
-    margin-top: 1rem;
     margin-left: auto;
     margin-right:auto;
 }

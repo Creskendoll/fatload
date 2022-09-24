@@ -3,12 +3,13 @@ import { ScreenContext } from "../App";
 import _ from "lodash";
 
 interface Props {
-    placesService: MutableRefObject< google.maps.places.PlacesService | null>;
+    placesService: MutableRefObject<google.maps.places.PlacesService | null>;
 }
 
 export default function SearchDrawer({ placesService }: Props) {
-    const [startLocationValue, setStartLocationValue] = React.useState('');
-    const [startLocationSuggestions, setStartLocationSuggestions] = React.useState<google.maps.places.PlaceResult[] | null>(null);
+    const [startLocationValue, setStartLocationValue] = React.useState("");
+    const [startLocationSuggestions, setStartLocationSuggestions] =
+        React.useState<google.maps.places.PlaceResult[] | null>(null);
     const dbouncedStartSearch = React.useRef(_.debounce(search, 250));
     const [, setScreen] = React.useContext(ScreenContext);
 
@@ -19,12 +20,11 @@ export default function SearchDrawer({ placesService }: Props) {
 
     function search(query: String) {
         let request = {
-            query: `${query}`
+            query: `${query}`,
         };
 
         if (request.query) {
             placesService.current?.textSearch(request, (result) => {
-                console.log(result);
                 setStartLocationSuggestions(result);
             });
         }
@@ -33,15 +33,30 @@ export default function SearchDrawer({ placesService }: Props) {
     return (
         <>
             <div>
-                <input 
-                    type='text' 
-                    list='locations' 
-                    placeholder='Delivery start location' 
+                <input
+                    onFocus={() => {
+                        setScreen("search-location");
+                    }}
+                    onBlur={() => {
+                        setScreen("map");
+                    }}
+                    type="text"
+                    className="form-control"
+                    list="locations"
+                    placeholder="Delivery start location"
                     value={startLocationValue}
-                    onChange={(e) => setStartLocationValue(e.target.value)}></input>
-                <datalist id='locations'>
+                    onChange={(e) => setStartLocationValue(e.target.value)}
+                ></input>
+                <datalist id="locations">
                     {startLocationSuggestions?.map((location, i) => {
-                        return i < 5 && <option key={i} value={location?.formatted_address}></option>
+                        return (
+                            i < 5 && (
+                                <option
+                                    key={i}
+                                    value={location?.formatted_address}
+                                ></option>
+                            )
+                        );
                     })}
                 </datalist>
             </div>

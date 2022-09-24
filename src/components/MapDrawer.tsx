@@ -5,14 +5,16 @@ import OrderStatus from "./OrderStatus";
 import SearchDrawer from "./SearchDrawer";
 
 interface Props {
-    screen: "map" | "in-progress";
-    placesService: MutableRefObject< google.maps.places.PlacesService | null>;
+    screen: "map" | "in-progress" | "search-location";
+    placesService: MutableRefObject<google.maps.places.PlacesService | null>;
 }
 
 export default function MapDrawer({ screen, placesService }: Props) {
     return (
         <DrawerContainer>
-            {screen === "map" && <SearchDrawer placesService={placesService} />}
+            {(screen === "map" || screen === "search-location") && (
+                <SearchDrawer placesService={placesService} />
+            )}
             {screen === "in-progress" && <OrderStatus />}
         </DrawerContainer>
     );
