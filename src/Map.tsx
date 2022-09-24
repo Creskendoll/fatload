@@ -11,7 +11,7 @@ function Map() {
             },
             zoom: 12,
         });
-    });
+    }, []);
     return (
         <div style={{ height: "100vh", width: "100vw" }} ref={ref} id="map" />
     );
