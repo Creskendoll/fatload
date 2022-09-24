@@ -10,18 +10,25 @@ function App() {
         lat: 52.5,
         lng: 13.4,
     });
-    const dirService = new google.maps.DirectionsService();
+    const dirService = React.useRef(new google.maps.DirectionsService());
+    const dirRenderer = React.useRef(new google.maps.DirectionsRenderer());
 
-    async function fetchDestination(
+    function fetchDestination(
         origin: google.maps.LatLng,
         destination: google.maps.LatLng
     ) {
-        const destRes = await dirService.route({
-            origin,
-            destination,
-            travelMode: google.maps.TravelMode.BICYCLING,
-        });
-        console.log(destRes);
+        dirService.current.route(
+            {
+                origin,
+                destination,
+                travelMode: google.maps.TravelMode.BICYCLING,
+            },
+            (result, status) => {
+                if (status === "OK") dirRenderer.current.setDirections(result);
+
+                console.log(result);
+            }
+        );
     }
 
     const onClick = (e: google.maps.MapMouseEvent) => {
@@ -37,6 +44,8 @@ function App() {
     const onIdle = (m: google.maps.Map) => {
         setZoom(m.getZoom());
         setCenter(m.getCenter().toJSON());
+
+        if (!dirRenderer.current.getMap()) dirRenderer.current.setMap(m);
     };
 
     return (
