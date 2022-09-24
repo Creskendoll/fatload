@@ -3,6 +3,18 @@ import "./styles/App.css";
 import Map from "./Map";
 import Marker from "./Marker";
 import { mockPath } from "./constants";
+import MapDrawer from "./components/MapDrawer";
+
+type ScreenState =
+    | "landing"
+    | "map"
+    | "search-location"
+    | "in-progress"
+    | "done";
+
+export const ScreenContext = React.createContext<
+    [ScreenState, (state: ScreenState) => void]
+>(["landing", () => {}]);
 
 function App() {
     const [clicks, setClicks] = useState<google.maps.LatLng[]>([]);
@@ -11,9 +23,13 @@ function App() {
         lat: 52.5,
         lng: 13.4,
     });
-    const [bikeLocation, setBikeLocation] = useState<google.maps.LatLng | null>(null);
-    const dirService = useRef(new google.maps.DirectionsService());
-    const dirRenderer = useRef(
+    const [bikeLocation, setBikeLocation] =
+        React.useState<google.maps.LatLng | null>(null);
+    const [screen, setScreen] = React.useState<ScreenState>("landing");
+    const screenValue = React.useMemo(() => [screen, setScreen], [screen]);
+
+    const dirService = React.useRef(new google.maps.DirectionsService());
+    const dirRenderer = React.useRef(
         new google.maps.DirectionsRenderer({
             suppressMarkers: true,
             suppressBicyclingLayer: true,
@@ -81,35 +97,54 @@ function App() {
     };
 
     return (
-        <div>
-            <Map
-                style={{}}
-                center={center}
-                zoom={zoom}
-                onClick={onClick}
-                onIdle={onIdle}
-                clickableIcons={false}
-            >
-                {clicks.map((latLng, i) => (
-                    <Marker
-                        key={i}
-                        position={latLng}
-                        animation={google.maps.Animation.DROP}
-                    />
-                ))}
-                {bikeLocation && (
-                    <Marker
-                        key={"bike"}
-                        icon={{
-                            url: "bike.png",
-                            scaledSize: new google.maps.Size(80, 80),
-                        }}
-                        position={bikeLocation}
-                    />
+        <ScreenContext.Provider value={screenValue as any}>
+            <div>
+                {screen === "landing" && (
+                    <>
+                        <h1>Bike Delivery</h1>
+                        <button onClick={() => setScreen("map")}>Next</button>
+                    </>
                 )}
-            </Map>
-        </div >
-    )
+                {(screen === "map" || screen === "in-progress") && (
+                    <>
+                        <Map
+                            style={{}}
+                            center={center}
+                            zoom={zoom}
+                            onClick={onClick}
+                            onIdle={onIdle}
+                            clickableIcons={false}
+                        >
+                            {clicks.map((latLng, i) => (
+                                <Marker
+                                    key={i}
+                                    position={latLng}
+                                    animation={google.maps.Animation.DROP}
+                                />
+                            ))}
+                            {bikeLocation && (
+                                <Marker
+                                    key={"bike"}
+                                    icon={{
+                                        url: "bike.png",
+                                        scaledSize: new google.maps.Size(
+                                            80,
+                                            80
+                                        ),
+                                    }}
+                                    position={bikeLocation}
+                                />
+                            )}
+                        </Map>
+
+                        <MapDrawer screen={screen} />
+                    </>
+                )}
+                {screen === "search-location" && <h1>Search</h1>}
+                {screen === "done" && <h1>Delivered!!!</h1>}
+            </div>
+        </ScreenContext.Provider>
+    );
 }
 
 export default App;
