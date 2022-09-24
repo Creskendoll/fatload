@@ -2,7 +2,6 @@ import React from "react";
 import "./styles/App.css";
 import Map from "./Map";
 import Marker from "./Marker";
-import _ from "lodash";
 import { mockPath } from "./constants";
 import MapDrawer from "./components/MapDrawer";
 
@@ -18,29 +17,24 @@ export const ScreenContext = React.createContext<
 >(["landing", () => {}]);
 
 function App() {
-    const [startLocationValue, setStartLocationValue] = React.useState('');
-    const [startLocationSuggestions, setStartLocationSuggestions] = React.useState<google.maps.places.PlaceResult[] | null>(null);
     const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
     const [zoom, setZoom] = React.useState(12);
     const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
         lat: 52.5,
         lng: 13.4,
     });
-    const dbouncedStartSearch = React.useRef(_.debounce(search, 250));
     const [bikeLocation, setBikeLocation] =
         React.useState<google.maps.LatLng | null>(null);
     const [screen, setScreen] = React.useState<ScreenState>("landing");
     const screenValue = React.useMemo(() => [screen, setScreen], [screen]);
 
+    const placesService = React.useRef<google.maps.places.PlacesService | null>(null);
     const dirService = React.useRef(new google.maps.DirectionsService());
     const dirRenderer = React.useRef(
         new google.maps.DirectionsRenderer({
             suppressMarkers: true,
             suppressBicyclingLayer: true,
         })
-    );
-    const placesService = React.useRef<google.maps.places.PlacesService | null>(
-        null
     );
 
     function animateBike(
@@ -104,23 +98,6 @@ function App() {
         if (!placesService.current) placesService.current = new google.maps.places.PlacesService(m);
     };
 
-    function search(query: String) {
-        let request = {
-            query: `${query}`
-        };
-
-        if (request.query) {
-            placesService.current?.textSearch(request, (result) => {
-                setStartLocationSuggestions(result);
-            });
-        }
-    }
-
-    React.useEffect(() => {
-        dbouncedStartSearch.current.cancel();
-        dbouncedStartSearch.current(startLocationValue);
-    }, [startLocationValue]);
-
     return (
         <ScreenContext.Provider value={screenValue as any}>
             <div>
@@ -132,7 +109,7 @@ function App() {
                 )}
                 {(screen === "map" || screen === "in-progress") && (
                     <>
-                        <div>
+                        {/* <div>
                             <input 
                                 type='text' 
                                 list='locations' 
@@ -144,7 +121,7 @@ function App() {
                                     return <option key={i} value={location?.formatted_address}></option>
                                 })}
                             </datalist>
-                        </div>
+                        </div> */}
                     
                         <Map
                             style={{}}
@@ -176,7 +153,7 @@ function App() {
                             )}
                         </Map>
 
-                        <MapDrawer screen={screen} />
+                        <MapDrawer screen={screen} placesService={placesService} />
                     </>
                 )}
                 {screen === "search-location" && <h1>Search</h1>}
