@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Marker from "./Marker";
 import { isLatLngLiteral } from "@googlemaps/typescript-guards";
 import { createCustomEqual } from "fast-equals";
 

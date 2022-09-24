@@ -1,8 +1,6 @@
 .status-head {
     display: flex;
     justify-content: space-between;
-    margin-left: 1rem;
-    margin-right: 1rem;
     margin-top: 1rem;
 }
 
@@ -12,4 +10,9 @@
 
 .driver > :not(:first-child) {
     margin-left: 1rem;
+}
+
+.contact {
+    display: flex;
+    justify-content: space-between;
 }
