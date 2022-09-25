@@ -7,13 +7,24 @@ import SearchDrawer from "./SearchDrawer";
 interface Props {
     screen: "map" | "in-progress" | "search-location";
     placesService: MutableRefObject<google.maps.places.PlacesService | null>;
+    onSetDestination: (loc: google.maps.LatLng) => void;
+    onOrder: () => void;
 }
 
-export default function MapDrawer({ screen, placesService }: Props) {
+export default function MapDrawer({
+    screen,
+    placesService,
+    onSetDestination,
+    onOrder,
+}: Props) {
     return (
         <DrawerContainer>
             {(screen === "map" || screen === "search-location") && (
-                <SearchDrawer placesService={placesService} />
+                <SearchDrawer
+                    onOrder={onOrder}
+                    onSetDestination={onSetDestination}
+                    placesService={placesService}
+                />
             )}
             {screen === "in-progress" && <OrderStatus />}
         </DrawerContainer>
