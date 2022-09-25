@@ -18,8 +18,10 @@ export const ScreenContext = React.createContext<
     [ScreenState, (state: ScreenState) => void]
 >(["landing", () => {}]);
 
+const origin = new google.maps.LatLng(52.4940361, 13.4462696);
+
 function App() {
-    const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
+    const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([origin]);
     const [zoom, setZoom] = React.useState(12);
     const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
         lat: 52.5,
@@ -56,7 +58,7 @@ function App() {
         } else {
             dirRenderer.current?.setMap(null);
             dirRenderer.current = null;
-            setClicks([]);
+            setClicks([origin]);
             setBikeLocation(null);
             setScreen("done");
         }
@@ -66,29 +68,29 @@ function App() {
         origin: google.maps.LatLng,
         destination: google.maps.LatLng
     ) {
-        if (mockPath) {
-            setClicks([
-                new google.maps.LatLng(mockPath.request.origin.location),
-                new google.maps.LatLng(mockPath.request.destination.location),
-            ]);
-            dirRenderer.current.setDirections(mockPath as any);
-            animateBike(mockPath.routes[0].overview_path as any, 0, 40);
-        } else {
-            dirService.current.route(
-                {
-                    origin,
-                    destination,
-                    travelMode: google.maps.TravelMode.BICYCLING,
-                },
-                (result, status) => {
-                    if (status === "OK")
-                        dirRenderer.current.setDirections(result);
-                    const [route] = result.routes;
+        if (bikeLocation) return;
+        // if (mockPath) {
+        //     setClicks([
+        //         new google.maps.LatLng(mockPath.request.origin.location),
+        //         new google.maps.LatLng(mockPath.request.destination.location),
+        //     ]);
+        //     dirRenderer.current.setDirections(mockPath as any);
+        //     animateBike(mockPath.routes[0].overview_path as any, 0, 40);
+        // } else {
+        // }
+        dirService.current.route(
+            {
+                origin,
+                destination,
+                travelMode: google.maps.TravelMode.BICYCLING,
+            },
+            (result, status) => {
+                if (status === "OK") dirRenderer.current.setDirections(result);
+                const [route] = result.routes;
 
-                    if (route) animateBike(route.overview_path, 0, 40);
-                }
-            );
-        }
+                if (route) animateBike(route.overview_path, 0, 40);
+            }
+        );
     }
 
     const onClick = (e: google.maps.MapMouseEvent) => {
@@ -171,6 +173,13 @@ function App() {
                         </Map>
 
                         <MapDrawer
+                            onSetDestination={(loc) => {
+                                const newLocation = [origin, loc];
+                                setClicks(newLocation);
+                            }}
+                            onOrder={() => {
+                                fetchDestination(clicks[0], clicks[1]);
+                            }}
                             screen={screen}
                             placesService={placesService}
                         />

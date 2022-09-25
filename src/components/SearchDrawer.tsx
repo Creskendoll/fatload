@@ -5,16 +5,21 @@ import "../styles/SearchDrawer.css";
 
 interface Props {
     placesService: MutableRefObject<google.maps.places.PlacesService | null>;
+    onSetDestination: (loc: google.maps.LatLng) => void;
+    onOrder: () => void;
 }
 
-export default function SearchDrawer({ placesService }: Props) {
+export default function SearchDrawer({
+    placesService,
+    onSetDestination,
+    onOrder,
+}: Props) {
     const [startLocationValue, setStartLocationValue] = React.useState("");
-    const [currentLocation, setCurrentLocation] = React.useState("")
+    const [currentLocation, setCurrentLocation] = React.useState("");
     const [startLocationSuggestions, setStartLocationSuggestions] =
         React.useState<google.maps.places.PlaceResult[] | null>(null);
     const dbouncedStartSearch = React.useRef(_.debounce(search, 250));
     const [screenState, setScreenState] = React.useContext(ScreenContext);
-    console.log(screenState);
     React.useEffect(() => {
         dbouncedStartSearch.current.cancel();
         dbouncedStartSearch.current(startLocationValue);
@@ -42,59 +47,81 @@ export default function SearchDrawer({ placesService }: Props) {
     return (
         <>
             <div className="searchWrapper">
-                { screenState === "search-location" && (
+                {screenState === "search-location" && (
                     <button
-                    className="current-location"
-                    onClick={() => setCurrentLocation("Lohmühlenstraße 65, 12435 Berlin")}
+                        className="current-location"
+                        onClick={() =>
+                            setCurrentLocation(
+                                "Lohmühlenstraße 65, 12435 Berlin"
+                            )
+                        }
                     >
                         <span id="location-logo"></span>
                         <span id="location-text">Current location</span>
                     </button>
-                )} 
-              
+                )}
+
                 <input
                     onFocus={() => {
                         setScreenState("search-location");
                     }}
-                    onBlur={() => {
-                        setScreenState("map");
-                    }}
                     type="text"
-                    className={screenState !== "search-location" ? "littleSearchWrapper" : "extendedSearchWrapper"}
+                    className={
+                        screenState !== "search-location"
+                            ? "littleSearchWrapper"
+                            : "extendedSearchWrapper"
+                    }
                     placeholder="Where to?"
                     value={startLocationValue}
                     onChange={(e) => {
                         setStartLocationValue(e.target.value);
                     }}
-                >
-                </input>
-                <img className={screenState !== "search-location" ? "searchIcon" : "searchIconExtended"} src="searchIcon.png" alt="icon"/>
+                ></input>
+                <img
+                    className={
+                        screenState !== "search-location"
+                            ? "searchIcon"
+                            : "searchIconExtended"
+                    }
+                    src="searchIcon.png"
+                    alt="icon"
+                />
                 <div className="searchesWrapper">
                     {startLocationSuggestions?.map((location, i) => {
                         return (
                             i < 5 &&
                             screenState === "search-location" && (
-                                <span
+                                <div
                                     onClick={(e) => {
+                                        onSetDestination(
+                                            location.geometry.location
+                                        );
                                         setStartLocationValue(
                                             location?.formatted_address || ""
                                         );
+                                        setScreenState("map");
                                     }}
                                     key={i}
                                     className="searches"
                                 >
                                     {location?.formatted_address}
-                                </span>
+                                </div>
                             )
                         );
                     })}
                 </div>
             </div>
-            {/* <button onClick={() => setScreenState("in-progress")}>Order</button> */}
+            <button
+                onClick={() => {
+                    onOrder();
+                    setScreenState("in-progress");
+                }}
+            >
+                Order
+            </button>
         </>
     );
 }
-
 
 // const [startLocationValue, setStartLocationValue] = React.useState("");
 // const [currentLocation, setCurrentLocation] = React.useState("")
