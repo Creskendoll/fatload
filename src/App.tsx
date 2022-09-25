@@ -47,6 +47,8 @@ function App() {
         index: number,
         wait: number
     ) {
+        if (bikeLocation) return;
+
         setBikeLocation(route[index]);
         if (index < route.length - 1) {
             // call the next "frame" of the animation
@@ -54,6 +56,7 @@ function App() {
                 animateBike(route, index + 1, wait);
             }, wait);
         } else {
+            dirRenderer.current?.setMap(null);
             setClicks([]);
             setBikeLocation(null);
             setScreen("done");
@@ -64,6 +67,7 @@ function App() {
         origin: google.maps.LatLng,
         destination: google.maps.LatLng
     ) {
+        console.log("fetch destination");
         if (mockPath) {
             setClicks([
                 new google.maps.LatLng(mockPath.request.origin.location),

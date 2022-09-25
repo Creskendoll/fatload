@@ -7,7 +7,7 @@ export const LandingPage = ({ setScreen }) => {
             {/* <button onClick={() => setScreen("map")}>Next</button> */}
             <img id="mainLogo" alt="" src="/mainLogo.svg"></img>
             <div>
-                <h1>Bike Delivery</h1>
+                <h1>Omegaload</h1>
                 <p id="summaryParagraph"> Quick. On Demand. Sustainable</p>
             </div>
 
