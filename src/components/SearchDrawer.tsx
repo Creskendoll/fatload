@@ -48,7 +48,7 @@ export default function SearchDrawer({ placesService }: Props) {
                     onClick={() => setCurrentLocation("Lohmühlenstraße 65, 12435 Berlin")}
                     >
                         <span id="location-logo"></span>
-                        <span id="location-text">current location</span>
+                        <span id="location-text">Current location</span>
                     </button>
                 )} 
               
