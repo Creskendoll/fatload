@@ -111,14 +111,21 @@ export default function SearchDrawer({
                     })}
                 </div>
             </div>
-            <button
-                onClick={() => {
-                    onOrder();
-                    setScreenState("in-progress");
-                }}
-            >
-                Order
-            </button>
+            {
+                screenState === "search-location" && (
+                    <button
+                    className="button btn"
+                    id="mainOrderButton"
+                        onClick={() => {
+                            onOrder();
+                            setScreenState("in-progress");
+                        }}
+                    >
+                        Order
+                    </button>
+                )
+            }
+           
         </>
     );
 }
