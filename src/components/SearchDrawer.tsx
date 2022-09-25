@@ -69,7 +69,7 @@ export default function SearchDrawer({ placesService }: Props) {
                 >
                 </input>
                 <img className={screenState !== "search-location" ? "searchIcon" : "searchIconExtended"} src="searchIcon.png" alt="icon"/>
-                <div>
+                <div className="searchesWrapper">
                     {startLocationSuggestions?.map((location, i) => {
                         return (
                             i < 5 &&
@@ -81,6 +81,7 @@ export default function SearchDrawer({ placesService }: Props) {
                                         );
                                     }}
                                     key={i}
+                                    className="searches"
                                 >
                                     {location?.formatted_address}
                                 </span>

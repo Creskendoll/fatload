@@ -63,6 +63,21 @@
     z-index: 3;
 } */
 
+.searches {
+    margin-top: 20px;
+    /* margin-bottom: 20px; */
+    /* height: 100px; */
+    /* width: 100px; */
+}
+.searchesWrapper {
+    width: 300px;
+    height: 200px;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
 .form-control.form-control-starting {
     border: 1px solid #d6d6d6;
     margin-bottom: 8px;
