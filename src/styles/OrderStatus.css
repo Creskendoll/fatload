@@ -1,7 +1,7 @@
 .status-head {
     display: flex;
     justify-content: space-between;
-    margin-top: 1rem;
+    margin-top: 1.5rem;
 }
 
 .driver {
@@ -15,4 +15,8 @@
 .contact {
     display: flex;
     justify-content: space-between;
+}
+
+#messageDriverLink {
+    margin-top: -15px;
 }

@@ -36,7 +36,7 @@ export default function OrderStatus() {
                 </a>
             </div>
 
-            <button onClick={() => setScreen("done")}>Done</button>
+            {/* <button onClick={() => setScreen("done")}>Done</button> */}
             </div>
     );
 }
