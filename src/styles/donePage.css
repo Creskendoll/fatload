@@ -32,14 +32,15 @@
 
 #bikeLogo {
     position: absolute;
-    top: 57%;
+    top: 55%;
     left: 50%;
     width: 125px;
     height: auto;
     scale: 1.25;
     filter: invert(1);
-    transform: translate(-50%,-50%)
+    transform: translate(-50%, -50%)
 }
+
 #confirmation_message {
     position: relative;
     top: 235px;
@@ -51,5 +52,11 @@
 }
 
 #reload-btn {
-
+    background-color: antiquewhite;
+    border: none;
+    color: black;
+    padding: 10px 35px;
+    font-weight: 500;
+    font-size: 20px;
+    margin-top: 30px;
 }
