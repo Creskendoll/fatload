@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #42BFFB;
+    background-color: #253B45;
     height: 100vh;
     width: 100vw;
     max-width: 100vw;
@@ -26,24 +26,33 @@
     width: 130px;
     height: 130px;
     transform: translate(-50%, -50%);
-    background-color: rgb(255, 255, 255);
+    background-color: #ffffff;
     border-radius: 50%;
 }
 
 #bikeLogo {
     position: absolute;
-    top: 55%;
+    top: 57%;
     left: 50%;
     width: 125px;
     height: auto;
+    scale: 1.25;
+    filter: invert(1);
     transform: translate(-50%,-50%)
 }
 #confirmation_message {
     position: relative;
-    top: 205px;
-    width: 250px;
+    top: 235px;
+    width: 280px;
     color: white;
     font-weight: bold;
     text-align: center;
     font-size: 32px;
+}
+
+#reload-btn {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%,-50%)
 }
