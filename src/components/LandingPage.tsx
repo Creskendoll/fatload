@@ -5,7 +5,7 @@ export const LandingPage = ({ setScreen }) => {
     return (
         <section className="landingPage">
             {/* <button onClick={() => setScreen("map")}>Next</button> */}
-            <img id="mainLogo" alt="" src="/mainLogo.svg"></img>
+            <img id="mainLogo" alt="" src="/mainLogoRedesign.svg"></img>
             <div>
                 <h1>Bike Delivery</h1>
                 <p id="summaryParagraph"> Quick. On Demand. Sustainable</p>
