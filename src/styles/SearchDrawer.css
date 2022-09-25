@@ -14,6 +14,23 @@
     font-size: 20px;
 }
 
+.extendedSearchWrapper {
+    width: 339px;
+    height: 55px;
+    /* margin-top: 27px; */
+    background-color: #D8F2FE;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-left: 70px;
+    font-size: 20px;
+    /* margin-bottom: 30px; */
+}
+
 .searchWrapper {
     display: flex;
     flex-direction: column;
@@ -25,4 +42,69 @@
     position: relative;
     bottom: 50px;
     right: 130px;
+}
+.searchIconExtended {
+    position: relative;
+    bottom: 40px;
+    right: 142px;
+}
+
+/* input.form-control {
+    position: relative;
+    font-weight: bold;
+    padding: 10px 10px;
+    background-color: #ffffff;
+    border: none;
+    top: -10px;
+    color: black;
+    z-index: 3;
+} */
+
+.form-control.form-control-starting {
+    border: 1px solid #d6d6d6;
+    margin-bottom: 8px;
+}
+.form-control.form-control-destination {
+    border: 1px solid #42BFFB;
+}
+
+input.form-control::placeholder {
+    color: rgb(98, 98, 98)
+}
+
+input.form-control:focus,
+input {
+    outline: none;
+    box-shadow: none;
+}
+
+.current-location {
+    margin-top: 30px;
+    font-weight: bold;
+    background-color: #EDEDED;
+    border: none;
+    display: flex;
+    width: 339px;
+    align-items: center;
+    padding: 15px 15px 24px;
+    color: black;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    z-index: 2;
+}
+
+#location-logo {
+    position: relative;
+    top: 2px;
+    margin-right: 1rem;
+    width: 15px;
+    height: 15px;
+    background-color: #253B45;
+    border-radius: 50%;
+}
+
+#location-text {
+    font-weight: 500;
+    line-height: 20px;
+    font-size: 16px;
 }
