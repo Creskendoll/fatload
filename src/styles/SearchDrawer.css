@@ -1,0 +1,28 @@
+
+.littleSearchWrapper {
+    width: 339px;
+    height: 75px;
+    margin-top: 27px;
+    background-color: #D8F2FE;
+    border: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+    padding-left: 70px;
+    font-size: 20px;
+}
+
+.searchWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.searchIcon {
+    position: relative;
+    bottom: 50px;
+    right: 130px;
+}

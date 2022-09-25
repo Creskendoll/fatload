@@ -1,6 +1,8 @@
 import React, { MutableRefObject } from "react";
 import { ScreenContext } from "../App";
 import _ from "lodash";
+import "../styles/SearchDrawer.css"
+
 
 interface Props {
     placesService: MutableRefObject<google.maps.places.PlacesService | null>;
@@ -11,8 +13,8 @@ export default function SearchDrawer({ placesService }: Props) {
     const [startLocationSuggestions, setStartLocationSuggestions] =
         React.useState<google.maps.places.PlaceResult[] | null>(null);
     const dbouncedStartSearch = React.useRef(_.debounce(search, 250));
-    const [, setScreen] = React.useContext(ScreenContext);
-
+    const [screenState, setScreenState] = React.useContext(ScreenContext);
+    console.log(screenState)
     React.useEffect(() => {
         dbouncedStartSearch.current.cancel();
         dbouncedStartSearch.current(startLocationValue);
@@ -32,41 +34,48 @@ export default function SearchDrawer({ placesService }: Props) {
 
     return (
         <>
-            <div>
+            <div className="searchWrapper">
                 <input
                     onFocus={() => {
-                        setScreen("search-location");
+                        setScreenState("search-location");
                     }}
                     onBlur={() => {
-                        setScreen("map");
+                        setScreenState("map");
                     }}
                     type="text"
-                    className="form-control"
-                    placeholder="Delivery start location"
+                    className="littleSearchWrapper"
+                    placeholder="Where to?"
                     value={startLocationValue}
                     onChange={(e) => {
                         
                         setStartLocationValue(e.target.value)
                     }}
-                ></input>
+                >
+                </input>
+                <img className="searchIcon" src="searchIcon.png" alt="icon"/>
                 <div>
                 {startLocationSuggestions?.map((location, i) => {
                         return (
                             i < 5 && (
-                                <span
-                                    onClick={(e) => {
-                                        setStartLocationValue(location?.formatted_address || "")
-                                    }}
-                                    key={i}
-                                >
-                                    {location?.formatted_address}
-                                </span>
-                            )
+                                
+                                    ( screenState === "search-location" &&
+                                        <span
+                                        onClick={(e) => {
+                                            setStartLocationValue(location?.formatted_address || "")
+                                        }}
+                                        key={i}
+                                    >
+                                        {location?.formatted_address}
+                                    </span>
+                                )
+                                    )
+                                
+                               
                         );
                     })}
                 </div>
             </div>
-            <button onClick={() => setScreen("in-progress")}>Order</button>
+            {/* <button onClick={() => setScreenState("in-progress")}>Order</button> */}
         </>
     );
 }
