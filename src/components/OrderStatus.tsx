@@ -1,13 +1,18 @@
 import React from "react";
 import { ScreenContext } from "../App";
 import "../styles/OrderStatus.css";
+import "../styles/inProgress.css"
+
 
 export default function OrderStatus() {
     const [, setScreen] = React.useContext(ScreenContext);
 
     return (
-        <>
+        <div className="inProgress">
             {/* Driver name */}
+           
+
+        
             <div className="status-head">
                 <div className="driver">
                     <img src="slash.png" />
@@ -17,7 +22,7 @@ export default function OrderStatus() {
                     </div>
                 </div>
 
-                <h4>5 Min</h4>
+                <h4 className="mainColor">5 Min</h4>
             </div>
             {/* Order Status */}
             <div className="status-head">
@@ -26,12 +31,12 @@ export default function OrderStatus() {
 
             <div className="contact">
                 <h6>+49 123 1231212</h6>
-                <button type="button" className="btn btn-primary">
+                <a id='messageDriverLink' type="button" className="mainColor">
                     Message
-                </button>
+                </a>
             </div>
 
             <button onClick={() => setScreen("done")}>Done</button>
-        </>
+            </div>
     );
 }

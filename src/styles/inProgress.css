@@ -1,0 +1,27 @@
+.inProgress h4,.inProgress h5{
+    cursor:default;
+    font-weight: bold;
+}
+
+
+/*
+Helper Classes
+*/
+
+.mainColor{
+    color: #42BFFB;
+}
+
+
+.drawer{
+    background-color: #253B45;
+    color: white;
+}
+#messageDriverLink{
+    font-weight: bold;
+    text-decoration: none;
+}
+#messageDriverLink:hover{
+    cursor:default;
+    color: #42BFFB;
+}
