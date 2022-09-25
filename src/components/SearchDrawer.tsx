@@ -15,7 +15,7 @@ export default function SearchDrawer({
     onOrder,
 }: Props) {
     const [startLocationValue, setStartLocationValue] = React.useState("");
-    const [currentLocation, setCurrentLocation] = React.useState("");
+    const [, setCurrentLocation] = React.useState("");
     const [startLocationSuggestions, setStartLocationSuggestions] =
         React.useState<google.maps.places.PlaceResult[] | null>(null);
     const dbouncedStartSearch = React.useRef(_.debounce(search, 250));

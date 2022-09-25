@@ -24,6 +24,9 @@
     border-width: 1px;
     border: none;
     display: flex;
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    border-bottom: 1px solid grey;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
@@ -65,12 +68,14 @@
 
 .searches {
     margin-top: 20px;
-    /* margin-bottom: 20px; */
-    /* height: 100px; */
-    /* width: 100px; */
+    width: 100%;
+    padding: 3px;
+    background-color: rgba(255, 255, 255, 0.917);
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
 }
 .searchesWrapper {
-    width: 300px;
+    width: 339px;
     height: 200px;
     display: flex;
     align-items: flex-start;
@@ -108,6 +113,8 @@ input {
     color: black;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+    border: 1px solid grey;
+    border-bottom: none;
     z-index: 2;
 }
 
