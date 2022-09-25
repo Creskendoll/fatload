@@ -3,16 +3,17 @@ import '../styles/donePage.css';
 import { motion } from 'framer-motion';
 
 const EndPage = () => {
-    const DELAY = 0.65
-    const DURATION = 0.65;
-
+    const DELAY: number = 0.5
+    const DURATION: number = 0.7
+    const TEXT: string = 'Your load has been delivered!'
+    
     return (
         <div id="donepage">
             <motion.img
                 animate={{ opacity: [0, 1] }}
                 transition={{ delay: DELAY, duration: 0.25 }}
                 id="correctLogo"
-                src="/end_correct.png"
+                src="/end_correct.svg"
                 alt="correctLogo"
             />
             <span id="correctLogo_bg"></span>
@@ -27,7 +28,7 @@ const EndPage = () => {
                 animate={{ y: [-100, 15, 0] }}
                 transition={{ duration: DURATION }}
             >
-                Your Package Delivered!
+                {TEXT}
             </motion.div>
         </div>
     )
