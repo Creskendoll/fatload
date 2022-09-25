@@ -117,7 +117,7 @@ function App() {
             <div>
                 {screen === "landing" && (
                     <>
-                        <LandingPage setScreen={setScreen} />
+                        <LandingPage />
                     </>
                 )}
                 {(screen === "map" ||
