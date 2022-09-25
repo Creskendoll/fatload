@@ -33,13 +33,11 @@ function App() {
     const placesService = React.useRef<google.maps.places.PlacesService | null>(
         null
     );
-    const dirService = React.useRef(new google.maps.DirectionsService());
-    const dirRenderer = React.useRef(
-        new google.maps.DirectionsRenderer({
-            suppressMarkers: true,
-            suppressBicyclingLayer: true,
-            preserveViewport: true,
-        })
+    const dirService = React.useRef<google.maps.DirectionsService>(
+        new google.maps.DirectionsService()
+    );
+    const dirRenderer = React.useRef<google.maps.DirectionsRenderer | null>(
+        null
     );
 
     function animateBike(
@@ -57,6 +55,7 @@ function App() {
             }, wait);
         } else {
             dirRenderer.current?.setMap(null);
+            dirRenderer.current = null;
             setClicks([]);
             setBikeLocation(null);
             setScreen("done");
@@ -67,7 +66,6 @@ function App() {
         origin: google.maps.LatLng,
         destination: google.maps.LatLng
     ) {
-        console.log("fetch destination");
         if (mockPath) {
             setClicks([
                 new google.maps.LatLng(mockPath.request.origin.location),
@@ -107,10 +105,28 @@ function App() {
         setZoom(m.getZoom());
         setCenter(m.getCenter().toJSON());
 
-        if (!dirRenderer.current.getMap()) dirRenderer.current.setMap(m);
+        if (!dirRenderer.current?.getMap()) {
+            const renderer = new google.maps.DirectionsRenderer({
+                suppressMarkers: true,
+                suppressBicyclingLayer: true,
+                preserveViewport: true,
+            });
+            renderer.setMap(m);
+            dirRenderer.current = renderer;
+        } else {
+            dirRenderer.current.setMap(null);
+            dirRenderer.current.setMap(m);
+        }
         if (!placesService.current)
             placesService.current = new google.maps.places.PlacesService(m);
     };
+
+    React.useEffect(() => {
+        const renderer = dirRenderer.current;
+        return () => {
+            renderer?.setMap(null);
+        };
+    }, [dirRenderer]);
 
     return (
         <ScreenContext.Provider value={screenValue as any}>

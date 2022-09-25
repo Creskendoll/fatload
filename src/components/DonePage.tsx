@@ -32,14 +32,15 @@ const EndPage = () => {
                 transition={{ duration: DURATION }}
             >
                 {TEXT}
+                <br />
+                <button
+                    id="reload-btn"
+                    className="btn btn-primary"
+                    onClick={() => setScreen("landing")}
+                >
+                    Order Again
+                </button>
             </motion.div>
-            <button
-                id="reload-btn"
-                className="btn btn-primary"
-                onClick={() => setScreen("landing")}
-            >
-                Order Again
-            </button>
         </div>
     );
 };
