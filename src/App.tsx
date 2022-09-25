@@ -99,6 +99,7 @@ function App() {
 
         const [origin, destination] = newClicks;
         if (origin && destination) {
+            setScreen("in-progress");
             fetchDestination(origin, destination);
         }
     };
@@ -174,10 +175,17 @@ function App() {
 
                         <MapDrawer
                             onSetDestination={(loc) => {
+                                setScreen("in-progress");
                                 const newLocation = [origin, loc];
                                 setClicks(newLocation);
+
+                                fetchDestination(
+                                    newLocation[0],
+                                    newLocation[1]
+                                );
                             }}
                             onOrder={() => {
+                                setScreen("in-progress");
                                 fetchDestination(clicks[0], clicks[1]);
                             }}
                             screen={screen}

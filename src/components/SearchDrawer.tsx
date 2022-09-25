@@ -99,7 +99,9 @@ export default function SearchDrawer({
                                         setStartLocationValue(
                                             location?.formatted_address || ""
                                         );
-                                        setScreenState("map");
+                                        setScreenState("in-progress");
+
+                                        // setScreenState("map");
                                     }}
                                     key={i}
                                     className="searches"
@@ -111,21 +113,18 @@ export default function SearchDrawer({
                     })}
                 </div>
             </div>
-            {
-                screenState === "search-location" && (
-                    <button
+            {screenState === "search-location" && (
+                <button
                     className="button btn"
                     id="mainOrderButton"
-                        onClick={() => {
-                            onOrder();
-                            setScreenState("in-progress");
-                        }}
-                    >
-                        Order
-                    </button>
-                )
-            }
-           
+                    onClick={() => {
+                        onOrder();
+                        setScreenState("in-progress");
+                    }}
+                >
+                    Order
+                </button>
+            )}
         </>
     );
 }
